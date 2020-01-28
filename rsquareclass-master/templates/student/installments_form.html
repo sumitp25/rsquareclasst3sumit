@@ -1,0 +1,469 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'assets/plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/css/progressbar.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Guardian Details</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Guardian</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Add Student</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Add guardian details
+                            </p>   
+<!--                            <div class="row">-->
+<!--                                <ul id="progressbar">-->
+<!--                                    <li class="active">Basic Details</li>-->
+<!--                                    <li class="active">Guardian Details</li>-->
+<!--                                    <li class="active">Course Details</li>-->
+<!--                                    <li class="current">Payment Details</li>-->
+<!--                                    <li>Batch Details</li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+
+                            <div class="container">
+                                    <div class="wrapper">
+                                    <div class="arrow-steps clearfix">
+                                              <div class="step"> <span>Basic Details</span> </div>
+                                              <div class="step"> <span>Guardian Details</span> </div>
+                                              <div class="step"> <span>Course Details</span> </div>
+                                              <div class="step current"> <span>Payment Details</span> </div>
+                                              <div class="step"> <span>Batch Details</span> </div>
+                                    </div>
+                                    </div>
+                            </div>
+
+
+                            <div class="mt-2">
+                                <form action="" method="POST" id="guardian-basic">
+                                    {% csrf_token %}
+                                    <div class="form-section">
+                                        <div class="mb-0">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-xs-6">
+                                                            <div class="alert alert-primary">
+                                                                Total (Rs.)<br/>
+                                                                <div id="total-value" class="h4">40,000</div>
+                                                            </div>                                                        
+                                                        </div>
+                                                        <div class="col-md-3 col-xs-6">
+                                                            <div class="alert alert-success">
+                                                                Received (Rs.)<br/>
+                                                                <div id="received-value" class="h4">10,000</div>
+                                                            </div>                                                        
+                                                        </div>
+                                                        <div class="col-md-3 col-xs-6">
+                                                            <div class="alert alert-warning">
+                                                                Uncleared (Rs.)<br/>
+                                                                <div id="uncleared-value" class="h4">0</div>
+                                                            </div>                                                        
+                                                        </div>
+                                                        <div class="col-md-3 col-xs-6">
+                                                            <div class="alert alert-danger">
+                                                                Balance (Rs.)<br/>
+                                                                <div id="balance-value" class="h4">30,000</div>
+                                                            </div>                                                       
+                                                        </div>
+                                                    </div>
+                                                    <div class="card mb-3">
+                                                        <div class="card-header h5" style="color: #35a989">
+                                                            Paid
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Rs 10,000</h5>
+                                                            <p class="card-text text-muted">Paid on 26 Dec, 2019 by cash updated by Priyanka Trivedi on 26 Dec, 2019 at 3:28 pm</p>
+                                                            <div class="mb-5">
+                                                                <span class="badge badge-success mr-3">Fees</span>
+                                                                <button type="button" class="btn btn-sm btn-light mr-3"><i class="mdi mdi-pencil"></i> Edit</button>
+                                                                <button type="button" class="btn btn-sm btn-danger mr-3"><i class="mdi mdi-delete"></i> Delete</button>
+                                                                <button type="button" class="btn btn-sm btn-success mr-3"><i class="mdi mdi-printer"></i> Print</button>
+                                                                <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Email</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card mb-3">
+                                                        <div class="card-header h5" style="color: #f16c69">
+                                                            Unpaid
+                                                            <div class="float-right">
+                                                                <button type="button"  class="btn btn-success btn-sm"  data-toggle="modal" data-target=".reconfigure-installments-modal">Reconfigure Installments</button>
+                                                                <button type="button" class="btn btn-light btn-sm">Edit existing Installments</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <ul class="list-group list-group-flush">
+                                                                <li class="list-group-item">
+                                                                    <h5 class="card-title">Rs 10,000</h5>
+                                                                    <p class="card-text text-muted">Due on 26 Jan, 2020, created by Priyanka Trivedi on 26 Dec, 2019</p>
+                                                                    <div class="mb-5">
+                                                                        <button type="button" class="btn btn-sm btn-light mr-3" data-toggle="modal" data-target=".payment-modal"><i class="mdi mdi-pencil"></i> Pay</button>
+                                                                        <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Send Fees Reminder</button>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    <h5 class="card-title">Rs 10,000</h5>
+                                                                    <p class="card-text text-muted">Due on 26 Jan, 2020, created by Priyanka Trivedi on 26 Dec, 2019</p>
+                                                                    <div class="mb-5">
+                                                                        <button type="button" class="btn btn-sm btn-light mr-3"><i class="mdi mdi-pencil"></i> Pay</button>
+                                                                        <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Send Fees Reminder</button>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    <h5 class="card-title">Rs 10,000</h5>
+                                                                    <p class="card-text text-muted">Due on 26 Jan, 2020, created by Priyanka Trivedi on 26 Dec, 2019</p>
+                                                                    <div class="mb-5">
+                                                                        <button type="button" class="btn btn-sm btn-light mr-3"><i class="mdi mdi-pencil"></i> Pay</button>
+                                                                        <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Send Fees Reminder</button>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="card">
+                                                        <div class="card-header">Fee Details</div>
+                                                        <div class="card-body">
+                                                            <ul class="list-group list-group-flush">
+                                                                <li class="list-group-item">
+                                                                    Admission Date: <span class="float-right">01 Oct. 2019</span>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    Fee: <span class="float-right">Rs. 50,000</span>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    Discount: <span class="float-right">Rs. 10,000</span>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    Refund: <span class="float-right">Rs. 0</span>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    Cancellation Charges: <span class="float-right">Rs. 0</span>
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    Total: <span class="float-right"><strong>Rs. 40,000</strong></span>
+                                                                </li>
+                                                            </ul>                                                                                                                            </div>
+                                                        </div>
+                                                        <h4>Download</h4>
+                                                        <button type="button" class="btn btn-info">
+                                                            Installment's schedules
+                                                        </button>                                                          
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>                                            
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->            
+            </div>
+            <!-- end page content-->            
+        </div>        
+    </div> <!-- content -->
+    
+    <div class="modal fade payment-modal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" id="payment-form">
+                        {% csrf_token %}
+                        <div id="form-error"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="course-name" class="col-sm-2 col-form-label">Fees Receipt ID</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="fee-receipt" name="fee_receipt" placeholder="Fee Receipt">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">                            
+                                    <label for="payment-amount" class="col-form-label col-sm-2">Amount</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="payment-amount" name="payment_amount">
+                                    </div>       
+                                </div>  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">     
+                                    <label class="col-form-label col-sm-2">Installment Date</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="installment-date" name="installment_date">
+                                    </div>       
+                                </div>
+                            </div>   
+                        </div> 
+                        <div class="row">               
+                            <div class="col-md-6">
+                                <div class="form-group row">                                
+                                    <label class="col-form-label col-sm-2">When it is paid</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="paid-date" name="paid_date">
+                                    </div>       
+                                </div>  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2">Mode of Payment</label>
+                                    <div class="col-sm-10">
+                                        <select required class="form-control" id="payment-mode" name="payment_mode">
+                                            <option value="CASH">Cash</option>
+                                            <option value="CHEQ">Cheque</option>
+                                            <option value="DEMD">Demand Draft</option>
+                                            <option value="CARD">Swipe Card</option>
+                                            <option value="NETB">Net Banking</option>
+                                            <option value="GATE">Psyment Gateway</option>
+                                            <option value="EMIC">EMI Card</option>
+                                        </select>
+                                    </div>       
+                                </div>
+                            </div>     
+                        </div>     
+                        <div class="row">
+                            <div class="col-md-6">         
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2" for="apply-tax">Apply tax?</label>     
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" id="switch7" switch="info" checked="">
+                                        <label for="switch7" data-on-label="Yes" data-off-label="No"></label>
+                                        <!-- <input type="checkbox" id="switch5" switch="warning" checked="">
+                                            <input type="checkbox" class="" id="apply-tax"> -->
+                                        </div>                                  
+                                    </div>  
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Tax Group</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="tax-group" name="tax_group">
+                                                <option value="GST">GST</option>
+                                            </select>
+                                        </div>  
+                                    </div>     
+                                </div>     
+                            </div>              
+                            <div class="col-md-6"> 
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2">Payment Category</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="payment-category" name="payment_category">
+                                            <option value="FEE">Fees</option>
+                                        </select>
+                                    </div>       
+                                </div>                   
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="course-submit">Submit</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        
+        <div class="modal fade reconfigure-installments-modal" tabindex="-1" role="dialog" aria-labelledby="reconfigureInstallments" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0">Configure Installments of Rs. 40,000</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST" id="reconfigure-installments-form">
+                            {% csrf_token %}
+                            <div id="form-error"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="course-name" class="col-sm-2 col-form-label">Amount</label>
+                                        <div class="col-sm-10">
+                                            <input required class="form-control" type="number" value="" id="installments-paid-amount" name="fee_receipt" placeholder="Fee Receipt">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="course-name" class="col-sm-2 col-form-label">Paid When?</label>
+                                        <div class="col-sm-10">
+                                            <input required class="form-control" type="text" value="" id="installments-paid-date" name="fee_receipt" placeholder="Fee Receipt">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Mode of Payment</label>
+                                        <div class="col-sm-10">
+                                            <select required class="form-control" id="installments-payment-mode" name="payment_mode">
+                                                <option value="CASH">Cash</option>
+                                                <option value="CHEQ">Cheque</option>
+                                                <option value="DEMD">Demand Draft</option>
+                                                <option value="CARD">Swipe Card</option>
+                                                <option value="NETB">Net Banking</option>
+                                                <option value="GATE">Psyment Gateway</option>
+                                                <option value="EMIC">EMI Card</option>
+                                            </select>
+                                        </div>       
+                                    </div>
+                                </div>       
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2" for="apply-tax">Apply tax?</label>     
+                                        <div class="col-sm-10">
+                                            <input type="checkbox" id="switch7" switch="info" checked="">
+                                            <label for="switch7" data-on-label="Yes" data-off-label="No"></label>
+                                        </div>                                  
+                                    </div>  
+                                </div>  
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Tax Group</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="tax-group" name="tax_group">
+                                                <option value="GST">GST</option>
+                                            </select>
+                                        </div>  
+                                    </div>     
+                                </div>
+                            </div>     
+                            <div class="row">
+                                <div class="col-md-6"> 
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Payment Category</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="payment-category" name="payment_category">
+                                                <option value="FEE">Fees</option>
+                                            </select>
+                                        </div>       
+                                    </div>                   
+                                </div>   
+                                <div class="col-md-6"> 
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Fees Receipt ID</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" id="payment-receipt-id" name="installments_payment_id" type="text" />
+                                        </div>
+                                    </div>
+                                </div>                             
+                            </div>   
+                            <div class="h6">Configure Installments for Rs 30,000</div>
+                            <div class="col-md-8"> 
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2">No of Installments</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="no-of-installments" name="no-of-installments" type="number" />
+                                    </div>
+                                </div>
+                            </div>     
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" id="preview-installments">Preview Installments</button>
+                        <button class="btn btn-light" id="cencel">Cancel</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        
+        
+        {% endblock %}
+        
+        {% block bottom-includes %}
+        <script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+        <!-- Buttons examples -->
+        <script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>    
+        
+        <!-- Select plugins -->
+        <script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+        
+        <script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/moment-with-locales.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+        
+        <script src="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+        
+        <script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+        {% endblock %}
+        
+        {% block script %}
+        <script>
+            $('#submit-btn').on("click", function(){
+                $('form#guardian-basic').parsley().whenValidate().done(function(){
+                    $('form#guardian-basic').submit();
+                })
+            })    
+        </script>
+        {% endblock %}

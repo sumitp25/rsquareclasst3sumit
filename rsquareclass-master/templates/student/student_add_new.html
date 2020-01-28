@@ -1,0 +1,254 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'assets/plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/css/progressbar.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/css/extra.css' %}" rel="stylesheet" >
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Student Basic Details</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Add Student</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Add students here
+                            </p>   
+<!--                            <div class="row">-->
+<!--                                <ul id="progressbar">-->
+<!--                                    <li class="current">Basic Details</li>-->
+<!--                                    <li class="">Guardian Details</li>-->
+<!--                                    <li>Course Details</li>-->
+<!--                                    <li>Payment Details</li>-->
+<!--                                    <li>Batch Details</li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+                                <div class="container">
+                                    <div class="wrapper">
+                                    <div class="arrow-steps clearfix">
+                                              <div class="step current"> <span> Basic Details</span> </div>
+                                              <div class="step"> <span>Guardian Details</span> </div>
+                                              <div class="step"> <span>Course Details</span> </div>
+                                              <div class="step"> <span>Payment Details</span> </div>
+                                              <div class="step"> <span>Batch Details</span> </div>
+                                                </div>
+
+                                    </div>
+                                </div>
+
+
+                            <div class="mt-2 add-form">
+                                <form action="" method="POST" id="student-basic">
+                                    {% csrf_token %}
+                                    <div class="form-section">
+                                        <div class="mb-0">
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+                                                <div class="col-sm-5">
+                                                    <input class="form-control form-control" type="text" placeholder="First Name" name="first_name" id="student-first-name"
+                                                    parsley-required="true" required data-parsley-group="student-details">
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input class="form-control form-control" type="text" placeholder="Last Name" name="last_name" id="student-last-name"
+                                                    parsley-required="true" required data-parsley-group="student-details">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-gender" class="col-sm-2 col-form-label">Gender</label>
+                                                <div class="col-sm-3">
+                                                    <input class="" type="radio" name="gender" id="student-gender-male" value="MALE" checked>
+                                                    <label class="form-check-label" for="student-gender-male">Male</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input class="" type="radio" name="gender" id="student-gender-female" value="FEMALE">
+                                                    <label class="form-check-label" for="student-gender-female">Female</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-category" class="col-sm-2 col-form-label">Category</label>
+                                                <div class="col-sm-5">
+                                                    <select class="form-control" name="category" id="student-category">
+                                                        <option value="GEN">General</option>
+                                                        <option value="OBC">OBC</option>
+                                                        <option value="SC">SC</option>
+                                                        <option value="ST">ST</option>
+                                                    </select>
+                                                </div>                                    
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-aadhar" class="col-sm-2 col-form-label">Aadhar Number</label>
+                                                <div class="col-sm-5">
+                                                    <input class="form-control form-control" type="text" placeholder="Aadhar Number" name="aadhar" id="student-aadhar"
+                                                >
+                                                </div>                                    
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-dob" class="col-sm-2 col-form-label">Date of Birth</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control floating-label" 
+                                                     placeholder="Date" name="dob" id="student-dob">
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-address" class="col-sm-2 col-form-label">Address</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control floating-label" placeholder="Address" id="student-address" name="address"
+                                                    >
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-address" class="col-sm-2 col-form-label"></label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control floating-label" placeholder="landmark" name="landmark" id="student-landmark"
+                                                    >
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control floating-label" placeholder="city" id="student-city" name="city"
+                                                    >
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-address" class="col-sm-2 col-form-label"></label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control floating-label" placeholder="state" id="student-state" name="state"
+                                                    >
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control floating-label" placeholder="Pincode" id="student-pincode" name="pincode"
+                                                   >
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-address" class="col-sm-2 col-form-label">Mobile No</label>
+                                                <div class="col-sm-7">
+                                                    <input type="tel" class="form-control floating-label" placeholder="phone number" id="student-phone" name="phone_no"
+                                                    parsley-required="true" required data-parsley-group="student-details">
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-address" class="col-sm-2 col-form-label">School/College</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control floating-label" placeholder="School/ College of the student" id="student-school" name="school"
+                                                    >
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-email" class="col-sm-2 col-form-label">Email</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control floating-label" placeholder="Email Id" name="email"
+                                                    >
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="student-nationality" class="col-sm-2 col-form-label">Nationality</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control floating-label" placeholder="Nationality" id="student-nationality" 
+                                                    name="nationality">
+                                                </div>
+                                                <!-- input-group -->
+                                            </div>
+                                            <button type="button" id="submit-btn" class="btn btn-primary float-right px-4">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>                                            
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->            
+        </div>
+        <!-- end page content-->            
+    </div>        
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+<script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>    
+
+<!-- Select plugins -->
+<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+<script src="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    $('#student-dob').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+    $('#submit-btn').on("click", function(){
+        $('form#student-basic').parsley().whenValidate().done(function(){
+            $('form#student-basic').submit();
+        })
+    })    
+</script>
+{% endblock %}

@@ -1,0 +1,298 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Form Elements</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Courses</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Courses</div>
+                                <a href="#" id="add-course-icon" data-toggle="modal" data-target=".bs-example-modal-center">
+                                    <i class="mdi mdi-plus-circle-outline" style="font-size: 30px"></i>
+                                </a>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                View your courses here.
+                            </p>       
+                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Fee</th>
+                                        <th>Subjects taught</th>
+                                        <th>Duration</th>
+                                        <th>Branch</th>
+                                        <th>Installments</th>                                   
+                                    </tr>
+                                </thead>
+                                
+                                
+                                <tbody>
+                                    {% for course in courses %}
+                                    <tr>
+                                        <td>{{course.name}}</td>
+                                        <td>{{course.fee}}</td>
+                                        <td>
+                                            <ul>
+                                                {% for rel in course.rel.all %}
+                                                <li>{{rel.subject}}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>{{course.duration}}</td>
+                                        <td>{{course.branch}}</td>
+                                        <td>{{course.no_of_installments}} in {{course.days_between_two_installments}} {{course.installment_duration_type}}</td>                           
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>                                              
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->            
+        </div>
+        <!-- end page content-->
+        
+    </div>
+    
+</div> <!-- content -->
+
+<div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0">Add Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" id="course-form">
+                    {% csrf_token %}
+                    <div id="form-error"></div>
+                    <div class="form-group row">
+                        <label for="course-name" class="col-sm-2 col-form-label">Course Name</label>
+                        <div class="col-sm-10">
+                            <input required class="form-control" type="text" value="" id="course-name" name="name" placeholder="Name of the course">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2">Select Subjects</label>
+                        <div class="col-sm-10">
+                            <select required name="subjects[]" id="course-subject" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
+                                {% for group in subject_groups %}
+                                <optgroup label="{{group.name}}">
+                                    {% for subject in group.subjects.all %}
+                                    <option value="{{subject.id}}">{{subject.name}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="course-fee" class="col-sm-2 col-form-label">Fee</label>
+                                <div class="col-sm-10 input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> &#8377;</span>
+                                    </div>
+                                    <input required class="form-control"  placeholder="Fee for the course" type="number" value="" id="course-fee" name="fee">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="course-duration" class="col-sm-2 col-form-label">Duration</label>
+                                <div class="col-sm-10 input-group">
+                                    <input required  placeholder="Duration of the course" class="form-control" type="number" value="" id="course-duration" name="duration">
+                                    <div class="input-group-append">
+                                        <select class="input-group-text form-control" id="duration-days-type" name="duration_type" >
+                                            <option value="Days">Days</option>
+                                            <option value="Months">Months</option>
+                                            <option value="Years">Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="course-no-of-installments" class="col-sm-2 col-form-label">Number of installments</label>
+                                <div class="col-sm-10">
+                                    <input  placeholder="No of installments to be paid" required class="form-control" type="number" value="" id="course-no-of-installments" name="no_of_installments">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="course-days-between-installments" class="col-sm-2 col-form-label">Time between two installments</label>
+                                <div class="col-sm-10 input-group">
+                                    <input  placeholder="Days between two installments" required class="form-control" type="number" value="" id="course-days-between-installments" name="days_between_two_installments">
+                                    <div class="input-group-append">
+                                        <select class="input-group-text form-control" id="installments-days-type" name="installment_duration_type" >
+                                            <option value="Days">Days</option>
+                                            <option value="Months">Months</option>
+                                            <option value="Years">Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="course-submit">Submit</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+<script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>
+<!-- Responsive examples -->
+<script src="{% static 'assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+<!-- Datatable init js -->
+<script src="{% static 'assets/pages/datatables.init.js' %}"></script>
+
+<!-- Select plugins -->
+<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    $('#add-course-icon').tooltip({
+        title: 'Add a course',
+        placement: 'left',
+        animation: true
+    })
+    $('.select2').select2();
+    
+    function showError(message){
+        $('#form-error').html(`<div id='form-alert' class="alert alert-danger fade show" role="alert">${message}</div>`);
+        setTimeout(function(){
+            $(".alert").alert('close')
+        }, 5000)
+    }
+    
+    $('#course-submit').on("click", function(){
+        const name = $('#course-name').val()
+        const fee = $('#course-fee').val()
+        const duration = $('#course-duration').val();
+        const no_of_installments = $('#course-no-of-installments').val()
+        const days_between_two_installments = $('#course-days-between-installments').val()
+        if(!name){
+            showError('Please enter a valid name')
+        }else if(!fee){
+            showError('Fee cannot be left empty!');
+        }else if(!duration){
+            showError('Enter a valid duration');
+        }else if(!no_of_installments){
+            showError('Enter valid no of installments')
+        }else if(!days_between_two_installments){
+            showError('Days between two installments field is required')
+        }else{
+            {% if request.user.is_owner %}
+            swal({
+                title: 'Add course to all branches?',
+                text: 'This will add the course to all the branches',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, add to all branches!',
+                cancelButtonText: 'Add to Curent Branch only!',
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-info m-l-10',
+                buttonsStyling: false
+            }).then(function(){
+                var input = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "add_to_all").val(true);
+                $('form#course-form').append(input);
+                $('form#course-form').submit();
+            }, function(dismiss){
+                if(dismiss=='cancel'){
+                    var input = $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "add_to_all").val(false);
+                    $('form#course-form').append(input);
+                    $('form#course-form').submit();
+                }
+            })
+            {% elif user.is_branch_manager %}
+            $('#course-form').submit()
+            {% endif %}
+        }
+        
+    });
+</script>
+{% endblock %}

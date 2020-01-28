@@ -1,0 +1,69 @@
+#progressbar {
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+	margin-bottom: 30px;
+	overflow: hidden;
+	/*CSS counters to number the steps*/
+    counter-reset: step;
+    display: flex;
+    flex-direction: row;
+}
+#progressbar li {
+	list-style-type: none;
+	color: #29bbe3;
+	text-transform: uppercase;
+	font-size: 9px;
+	width: 33.33%;
+    margin: auto;
+	position: relative;
+}
+#progressbar li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 20px;
+	line-height: 20px;
+	display: block;
+	font-size: 10px;
+	color: #333;
+	background: #f8f9fa;
+	border-radius: 3px;
+    margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+	content: '';
+	width: 90%;
+	height: 2px;
+	background: #f8f9fa;
+	position: absolute;
+	left: -45%;
+	top: 9px;
+	z-index: 0; /*put it behind the numbers*/
+}
+
+#progressbar li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none; 
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,  #progressbar li.active:after, #progressbar li.current:after{
+	background: #27AE60;
+	color: white;
+}
+
+#progressbar li.current:before{
+	background: #29bbe3;
+	color: white;
+}
+
+
+
+
+
+/* optional css for optional progress bar*/
+
+/* Global CSS, you probably don't need that */
+

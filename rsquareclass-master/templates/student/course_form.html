@@ -1,0 +1,342 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'assets/plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/css/progressbar.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Student Basic Details</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Add Student</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Add students here
+                            </p>   
+<!--                            <div class="row">-->
+<!--                                <ul id="progressbar">-->
+<!--                                    <li class="active">Basic Details</li>-->
+<!--                                    <li class="active">Guardian Details</li>-->
+<!--                                    <li class="current">Course Details</li>-->
+<!--                                    <li>Payment Details</li>-->
+<!--                                    <li>Batch Details</li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+
+                            <div class="container">
+                                    <div class="wrapper">
+                                    <div class="arrow-steps clearfix">
+                                              <div class="step"> <span>Basic Details</span> </div>
+                                              <div class="step"> <span>Guardian Details</span> </div>
+                                              <div class="step current"> <span>Course Details</span> </div>
+                                              <div class="step"> <span>Payment Details</span> </div>
+                                              <div class="step"> <span>Batch Details</span> </div>
+                                    </div>
+                                    </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <form action="" method="POST" id="student-course">
+                                    {% csrf_token %}
+                                    <div class="form-section" id="course-details">
+                                        <div class="mb-0">
+                                            <div class="form-group row">
+                                                <label for="admission-date" class="col-sm-2 col-form-label">Date of Admission</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control floating-label" placeholder="Date" name='admission_date' id="admission-date" required parsley-required="true" data-parsley-group="course-details">
+                                                </div>
+                                            </div>
+                                            <div class="h6">Courses</div>
+                                            <div id="course-container" class="container">
+                                                <table class="table table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Academic Year</th>
+                                                            <th>Course</th>
+                                                            <th>Qty</th>
+                                                            <th>Fees</th>
+                                                            <th></th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-right">Fees</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="fee-total">Rs.</span>
+                                                                    </div>
+                                                                    <input type="number" name="total_course_fee" class="form-control" value="10" readonly>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-right">Discount if any</td>
+                                                            <td colspan="2">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text prepend-discount" id="discount-type">Rs.</span>
+                                                                    </div>
+                                                                    <input type="number" name="discount" class="form-control" value="0">
+                                                                    <div class="input-group-append">
+                                                                        <select class="form-control" name="discount_type">
+                                                                            <option value="FLT">Flat</option>
+                                                                            <option value="PER">Percentage</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-right">Tootal fees</td>
+                                                            <td colspan="2">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="total-fee">Rs.</span>
+                                                                    </div>
+                                                                    <input type="number" name="total-fee" class="form-control" value="0" readonly>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-right">Notes</td>
+                                                            <td colspan="2">
+                                                                <input type="text" name="notes" class="form-control" >
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><button type="button" id="add-course" class="btn btn-sm btn-secondary"><i class="mdi mdi-plus"></i> Add course</button></td>
+                                                            <td><button type="button" id="additional-fee" class="btn btn-sm btn-secondary"><i class="mdi mdi-plus"></i> Additional Fees</button></td>
+                                                            <td class="text-right"></td>
+                                                            <td colspan="2">
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <button type="button" id="submit-btn" class="btn btn-primary float-right px-4">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>                                            
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->            
+        </div>
+        <!-- end page content-->            
+    </div>        
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+<script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>    
+
+<!-- Select plugins -->
+<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+<script src="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    let course_num=0;
+    $('#admission-date').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+    if(course_num==0){
+        $('#add-course').trigger('click');
+    }
+    $('#course-details').on("click", '.delete_course', function(){
+        $(this).closest('tr').remove();
+        updateValues();
+    })
+    $('#course-details').on("change", ":input", function(){
+        updateValues();
+    })
+    
+    const updateValues = () => {
+        let total_course_fee=0;
+        let total_fee=0;
+        $('tr[data-course-count]').each(function(){
+            let curr_value = $(this).find('.course_count').val() * $(this).find('option:selected').attr('data-cost');
+            total_course_fee += curr_value;
+            $(this).find('[name=course_value]').val(curr_value);
+        });
+        $("input[name='extra_fee']").each(function(){
+            if($(this).val()){
+                total_course_fee = total_course_fee + parseInt($(this).val());
+            }            
+        })
+        $('input[name="total_course_fee"]').val(total_course_fee);
+        total_fee += total_course_fee;
+        let discount_type = 'flat';
+        if($('select[name="discount_type"]').val()=='flat'){
+            discount_type = 'flat';
+            $('.prepend-discount').text('Rs.')
+        }else{
+            discount_type="per";
+            $('.prepend-discount').text('%')
+        }
+        let discount = $('[name="discount"]').val();
+        if(discount_type=='flat'){
+            total_fee -= discount
+        }else{
+            total_fee = total_fee - discount*total_fee/100;
+        }
+        $('[name="total-fee"').val(total_fee);        
+        
+    }
+    $('#add-course').on("click", function(){
+        course_num++;
+        $('#course-container tbody').append(getNewCourseHTML());
+        $('tr[data-course-count="'+course_num+'"] .course_count').TouchSpin({
+            initval: 1,
+            buttondown_class: 'btn btn-primary',
+            buttonup_class: 'btn btn-primary'
+        });
+        updateValues();
+    })
+    $('#additional-fee').on("click", function(){
+        $('#course-details tfoot').prepend(getExtraFeeHTML());
+        updateValues();
+    })
+    
+    const getExtraFeeHTML = () => {
+        return `
+        <tr class="extra-fee-row">
+            <td></td>
+            <td class="text-right">Additional Fee</td>
+            <td>
+                <input type="text" required parsley-required="true" data-parsley-group="course-details" name="extra_fee_remarks" class="form-control" placeholder="Remarks">
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Rs.</span>
+                    </div>
+                    <input type="number" name="extra_fee" class="form-control" value="0">
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-light delete_course"><i class="mdi mdi-delete"></i></a>
+            </td>
+        </tr>
+        `;
+    }
+    
+    const getNewCourseHTML = () => {
+        return `
+        <tr data-course-count="${course_num}">
+            <td>
+                <input type="text" required parsley-required="true" data-parsley-group="course-details" name="course_academic_year" class="form-control" placeholder="2018-19">
+            </td>
+            <td>
+                <select class="form-control" name="course-taken">
+                    {% for course in courses %}
+                    <option value="{{course.id}}" data-cost="{{course.fee}}">{{course.name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input class="course_count" type="text" value="1" name="course_count">
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Rs.</span>
+                    </div>
+                    <input type="number" name="course_value" class="form-control" val="0" readOnly>
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-light delete_course"><i class="mdi mdi-delete"></i></a>
+            </td>
+        </tr>
+        `
+    }
+    
+    $('#add-course').trigger('click');
+    $('#submit-btn').on("click", function(){
+        $('form#student-course').parsley().whenValidate().done(function(){
+            $('form#student-course').submit();
+        })
+    }) 
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/fullcalendar/css/fullcalendar.min.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Calender</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active">Calender</li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <div id='calendar'></div>
+                            
+                            <div style='clear:both'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!-- end page content-->
+        
+    </div> <!-- container-fluid -->
+    
+</div> <!-- content -->
+
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+<script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'assets/plugins/moment/moment.js' %}"></script>
+<script src='{% static "assets/plugins/fullcalendar/js/fullcalendar.min.js" %}'></script>
+<script src='{% static "assets/pages/calendar-init.js" %}'></script>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

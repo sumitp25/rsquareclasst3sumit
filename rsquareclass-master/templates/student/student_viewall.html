@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Students</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Students</div>
+                                <a href="{% url 'student-add' %}">
+                                    <i class="mdi mdi-plus-circle-outline" style="font-size: 30px"></i>
+                                </a>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                View your students here.
+                            </p>   
+                            <div class="container" id="student-container">
+                                <input class="form-control mb-3 search-input" onkeyup="myfunction()" placeholder="Enter student name, email or contact number to filter"/>
+                                <div class="row buttons px-3">
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2" onclick="selectAll()">Select All</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="clearAll()">Clear All</button>
+                                </div>
+                            </div>
+                            <div class="filter-container pt-4">   
+                                {% for student in students %}
+                                <div class="filter-item py-2 border-top">
+                                    <div class="d-flex flex-row" style="align-items: center;">
+                                        <input type="checkbox" data-student-id="{{student.id}}" class="mx-3 filter-item-checkbox"/>
+                                        <img src="{% if student.profile_picture %}{{student.profile}}{% else %}{% static 'images/grey-screen.jpg' %}{% endif %}" height="60" width="50" />
+                                        <div class="px-3 flex-grow-1">
+                                            <div class="student-name h5">{{student}}</div>
+                                            <div class="student-data text-muted">
+                                                created on {{student.date_joined}} | Batch: DEMO BATCH
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="dropdown">
+                                                <i class="mdi mdi-dots-vertical px-3" style="cursor: pointer;" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                                    <a class="dropdown-item" href="">
+                                                        Edit
+                                                    </a>
+                                                    <a class="dropdown-item" href="">
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>          
+                                {% endfor %}
+                            </div>   
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <!-- end page content-->
+    </div>
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+    const myfunction = () => {
+        $('.filter-container .filter-item').each(function(){
+            const val = $('.search-input').val().toUpperCase();
+            if($(this).text().toUpperCase().indexOf(val) <= -1){
+                $(this).hide();
+                $(this).find('.filter-item-checkbox').prop('checked', false);
+            }else{
+                $(this).show();
+            }
+        })
+    }
+
+    const selectAll = () => {
+        $('.filter-item-checkbox').each(function(){
+            $(this).prop('checked', true);
+        })
+    }
+
+    const clearAll = () => {
+        $('.filter-item-checkbox').each(function(){
+            $(this).prop('checked', false);
+        })
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'assets/plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/css/progressbar.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" >
+<link href="{% static 'assets/css/extra.css' %}" rel="stylesheet" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Guardian Details</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Guardian</a></li>
+                    </ol>
+
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Add Student</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Add guardian details
+                            </p>
+<!--                            <div class="row">-->
+<!--                                <ul id="progressbar">-->
+<!--                                    <li class="active">Basic Details</li>-->
+<!--                                    <li class="current">Guardian Details</li>-->
+<!--                                    <li>Course Details</li>-->
+<!--                                    <li>Payment Details</li>-->
+<!--                                    <li>Batch Details</li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+                            <div class="container">
+                                    <div class="wrapper">
+                                    <div class="arrow-steps clearfix">
+                                              <div class="step"> <span>Basic Details</span> </div>
+                                              <div class="step current"> <span>Guardian Details</span> </div>
+                                              <div class="step"> <span>Course Details</span> </div>
+                                              <div class="step"> <span>Payment Details</span> </div>
+                                              <div class="step"> <span>Batch Details</span> </div>
+                                                </div>
+                                    </div>
+                            </div>
+<!--                            <p align="right" class="add-new-gaurdian">-->
+<!--                                  <span class="glyphicon glyphicon-plus-sign">-->
+<!--                                    <a class="btn btn-primary" href="{% url 'student-guardian-add' sid %}">+ Add new gaurdian</a>-->
+<!--                                    </span>-->
+<!--                            </p>-->
+                            <button type="button" id="modal-button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">
+                                <span class="glyphicon glyphicon-plus-sign"></span> Add new gaurdian</button>
+
+                            <div id="myModal" class="modal fade" role="dialog">
+                                  <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h3>Gaurdian details</h3>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+<!--                                        <h4 class="modal-title"></h4>-->
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="mt-2">
+                                <form action="" method="POST" id="guardian-basic">
+                                    {% csrf_token %}
+                                    <div class="form-section">
+                                        <div class="mb-0">
+                                            <div class="form-group row">
+                                                <label for="guardian-relation" class="col-sm-2 col-form-label">Relation</label>
+                                                <div class="col-sm-3 mt-2">
+                                                    <input class="" type="radio" name="relation" id="guardian-relation-father" checked value="FAT">
+                                                    <label class="form-check-label" for="guardian-relation-father">Father</label>
+                                                </div>
+                                                <div class="col-sm-3 mt-2">
+                                                    <input class="" type="radio" name="relation" id="guardian-relation-mother" value="MOT">
+                                                    <label class="form-check-label" for="guardian-relation-mother">Mother</label>
+                                                </div>
+                                                <div class="col-sm-3 mt-2">
+                                                    <input class="" type="radio" name="relation" id="guardian-relation-other" value="OTH">
+                                                    <label class="form-check-label" for="guardian-relation-other">Other</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="guardian-name" class="col-sm-2 col-form-label">Name</label>
+                                                <div class="col-sm-2">
+                                                    <select class="form-control" name="salutation" id="guardian-salutation">
+                                                        <option>Mr.</option>
+                                                        <option>Mrs.</option>
+                                                        <option>Ms.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control floating-label" placeholder="First Name"
+                                                    required data-parsley-group="guardian-details" parsley-required="true" id="guardian-first-name"
+                                                    name="first_name">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control floating-label" placeholder="Last Name"
+                                                    required data-parsley-group="guardian-details" parsley-required="true" id="guardian-last-name"
+                                                    name="last_name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="guardian-aadhar" class="col-sm-2 col-form-label">Aadhar No.</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control floating-label" placeholder="Aadhar Number"
+                                                    required data-parsley-group="guardian-details" parsley-required="true" id="guardian-aadhar"
+                                                    name="aadhar_number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="guardian-phone" class="col-sm-2 col-form-label">Phone No.</label>
+                                                <div class="col-sm-8">
+                                                    <input type="tel" class="form-control floating-label" placeholder="Phone num"
+                                                    required data-parsley-group="guardian-details" parsley-required="true" id="guardian-phone"
+                                                    name="phone">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="guardian-email" class="col-sm-2 col-form-label">Email</label>
+                                                <div class="col-sm-8">
+                                                    <input type="email" class="form-control floating-label" placeholder="Email Id"
+                                                    required parsley-required="true" data-parsley-group="guardian-details" data-parsley-type="email" id="guardian-email"
+                                                    name="email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="guardian-occupation" class="col-sm-2 col-form-label">Occupation</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control floating-label" placeholder="Enter Occupation"
+                                                    required data-parsley-group="guardian-details" parsley-required="true" id="guardian-occupation"
+                                                    name="occupation">
+                                                </div>
+                                            </div>
+                                            <button type="button" id="submit-btn" class="btn btn-primary float-right px-4">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                                      </div>
+<!--                                      <div class="modal-footer">-->
+<!--                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                      </div>-->
+                                    </div>
+
+                                  </div>
+                                </div>
+
+                            <div class="mt-2">
+                                <table class ="table table-hover" >
+                            {% for gaurdian in gaurdians %}
+
+                                    <tr  bgcolor="white">
+                                        <td><strong>First name:- </strong>{{ gaurdian.first_name }}</td>
+                                        <td ><strong>Last name:- </strong>{{ gaurdian.last_name }}</td>
+                                        <td ><strong>Email-id:- </strong>{{ gaurdian.email }}</td>
+                                    </tr>
+                            {% endfor %}
+                                </table>
+<!--                                <ol>-->
+<!--                                    {% for gaurdian in gaurdians %}-->
+<!--                                    <li>{{ gaurdian.first_name }} , {{ gaurdian.last_name }}, {{ gaurdian.email }}</li>-->
+<!--                                    {% endfor %}-->
+
+<!--                                </ol>-->
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+            <p align="right">
+               <a class="btn btn-primary gaurdian-submit" href="{% url 'student-course-add' sid %}" >Proceed</a>
+            </p>
+
+        </div>
+        <!-- end page content-->
+    </div>
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+<script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>
+
+<!-- Select plugins -->
+<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+<script src="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+
+<script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    $('#submit-btn').on("click", function(){
+        $('form#guardian-basic').parsley().whenValidate().done(function(){
+            $('form#guardian-basic').submit();
+        })
+    })
+</script>
+{% endblock %}

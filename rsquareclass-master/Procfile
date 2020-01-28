@@ -1,0 +1,1 @@
+web: gunicorn rsquareclass.wsgi --log-file -

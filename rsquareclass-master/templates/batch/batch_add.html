@@ -1,0 +1,145 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Form Elements</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Batches</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row justify-content-md-center">
+                <div class="col-sm-12 col-md-6">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Batches</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Add a batch
+                            </p>   
+                            <form action="" method="POST" class="form mb-4">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="batch-name" class="">Batch name</label>
+                                    <input type="text" required class="form-control" id="batch-name" name="name" placeholder="Eg. Evening Batch">
+                                </div>
+                                <div class="form-group">
+                                    <label class="" for="is_course_based">Is the batch for course?</label>  
+                                    <div>                                        
+                                        <input type="checkbox" name="is_course_based" id="is_course_based" switch="info" checked="">
+                                        <label for="is_course_based" data-on-label="true" data-off-label="false"></label>
+                                    </div>   
+                                </div>  
+                                <div id="batch-subject" class="form-group">
+                                    <label class="">Select Subjects</label>
+                                    <select name="subjects" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
+                                        {% for group in subject_groups %}
+                                        <optgroup label="{{group.name}}">
+                                            {% for subject in group.subjects.all %}
+                                            <option value="{{subject.id}}">{{subject.name}}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                        {% endfor %}
+                                    </select>                                    
+                                </div>
+                                <div class="form-group" id="batch-course">
+                                    <label class="">Select Courses</label>
+                                    <select name="course" class="select2 form-control" data-placeholder="Choose a course ...">
+                                        <option value="">Select a course</option>
+                                        {% for course in courses %}
+                                            <option value="{{course.id}}">{{course.name}}</option>
+                                        {% endfor %}
+                                    </select>                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="batch-name" class="">Academic year</label>
+                                    <input type="text" required class="form-control" id="batch-name" name="academic_year" placeholder="Eg. 2018-2019">
+                                </div>
+                                <button class="btn btn-success mt-3 float-right">Submit</button>
+                            </form> 
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <!-- end page content-->
+    </div>
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    $('#is_course_based').on("change", function(){
+        if($(this).is(':checked')){
+            $('#batch-course').show();
+            $('#batch-subject').hide();
+        }else{
+            $('#batch-subject').show();
+            $('#batch-course').hide();
+
+        }
+    })   
+
+
+    {% if batch %}
+        $('[name="name"]').val('{{batch.name}}');
+        $('[name="academic_year"]').val('{{batch.academic_year}}')
+        {% if batch.is_course_based %}
+        $('[name="is_course_based"]').prop('checked', true);
+        $('[name="course"]').val('{{batch.course.pk}}');
+        {% else %}
+        $('[name="is_course_based"]').prop('checked', false);
+        {% for subject in batch.subjects.all %}
+        $('option[value="'+{{subject.pk}}+'"]').prop("selected", true);
+        {% endfor %}
+        {% endif %}
+        $('[name="is_course_based"]').trigger('change');
+    {% endif %}
+
+    $('#is_course_based').trigger('change');
+    $('.select2').select2();
+
+</script>
+{% endblock %}

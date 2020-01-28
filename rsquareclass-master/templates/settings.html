@@ -1,0 +1,211 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Inbox</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Email</a></li>
+                        <li class="breadcrumb-item active">Inbox</li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <!-- end row -->
+            <div class="row">
+                <div class="col-12">
+                    <!-- Left sidebar -->
+                    <div class="email-leftbar card">
+                        <a href="email-compose.html" class="btn btn-danger btn-rounded btn-block waves-effect waves-light">Compose</a>
+                        
+                        <div class="mail-list m-t-20">
+                            <a href="#" class="active">Inbox <span class="ml-1">(18)</span></a>
+                            <a href="#">Starred</a>
+                            <a href="#">Important</a>
+                            <a href="#">Draft</a>
+                            <a href="#">Sent Mail</a>
+                            <a href="#">Trash</a>
+                        </div>
+                        
+                        
+                        <h6 class="m-t-30">Labels</h6>
+                        
+                        <div class="mail-list m-t-20">
+                            <a href="#"><span class="mdi mdi-arrow-right-drop-circle text-info float-right"></span>Theme Support</a>
+                            <a href="#"><span class="mdi mdi-arrow-right-drop-circle text-warning float-right"></span>Freelance</a>
+                            <a href="#"><span class="mdi mdi-arrow-right-drop-circle text-primary float-right"></span>Social</a>
+                            <a href="#"><span class="mdi mdi-arrow-right-drop-circle text-danger float-right"></span>Friends</a>
+                            <a href="#"><span class="mdi mdi-arrow-right-drop-circle text-success float-right"></span>Family</a>
+                        </div>
+                        
+                        <h6 class="m-t-30">Chat</h6>
+                        
+                        <div class="m-t-20">
+                            <a href="#" class="media">
+                                <img class="d-flex mr-3 rounded-circle" src="assets/images/users/user-2.jpg" alt="Generic placeholder image" height="36">
+                                <div class="media-body chat-user-box">
+                                    <p class="user-title m-0">Scott Median</p>
+                                    <p class="text-muted">Hello</p>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="media">
+                                <img class="d-flex mr-3 rounded-circle" src="assets/images/users/user-3.jpg" alt="Generic placeholder image" height="36">
+                                <div class="media-body chat-user-box">
+                                    <p class="user-title m-0">Julian Rosa</p>
+                                    <p class="text-muted">What about our next..</p>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="media">
+                                <img class="d-flex mr-3 rounded-circle" src="assets/images/users/user-4.jpg" alt="Generic placeholder image" height="36">
+                                <div class="media-body chat-user-box">
+                                    <p class="user-title m-0">David Medina</p>
+                                    <p class="text-muted">Yeah everything is fine</p>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="media">
+                                <img class="d-flex mr-3 rounded-circle" src="assets/images/users/user-6.jpg" alt="Generic placeholder image" height="36">
+                                <div class="media-body chat-user-box">
+                                    <p class="user-title m-0">Jay Baker</p>
+                                    <p class="text-muted">Wow that's great</p>
+                                </div>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    <!-- End Left sidebar -->
+                    
+                    
+                    <!-- Right Sidebar -->
+                    <div class="email-rightbar mb-3">
+                        
+                        <div class="card">
+                            <div class="btn-toolbar p-3" role="toolbar">
+                                <div class="btn-group mo-mb-2">
+                                    <button type="button" class="btn btn-primary waves-light waves-effect"><i class="fa fa-inbox"></i></button>
+                                    <button type="button" class="btn btn-primary waves-light waves-effect"><i class="fa fa-exclamation-circle"></i></button>
+                                    <button type="button" class="btn btn-primary waves-light waves-effect"><i class="far fa-trash-alt"></i></button>
+                                </div>
+                                <div class="btn-group ml-1 mo-mb-2">
+                                    <button type="button" class="btn btn-primary waves-light waves-effect dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-folder"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Updates</a>
+                                        <a class="dropdown-item" href="#">Social</a>
+                                        <a class="dropdown-item" href="#">Team Manage</a>
+                                    </div>
+                                </div>
+                                <div class="btn-group ml-1 mo-mb-2">
+                                    <button type="button" class="btn btn-primary waves-light waves-effect dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-tag"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Updates</a>
+                                        <a class="dropdown-item" href="#">Social</a>
+                                        <a class="dropdown-item" href="#">Team Manage</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="btn-group ml-1 mo-mb-2">
+                                    <button type="button" class="btn btn-primary waves-light waves-effect dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        More
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Mark as Unread</a>
+                                        <a class="dropdown-item" href="#">Mark as Important</a>
+                                        <a class="dropdown-item" href="#">Add to Tasks</a>
+                                        <a class="dropdown-item" href="#">Add Star</a>
+                                        <a class="dropdown-item" href="#">Mute</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="settings-form" method="POST" action="{% url 'settings' %}">
+                                {% csrf_token %}
+                                <ul class="message-list container pt-4">
+                                    <div class="row px-4">
+                                        <label for="dark-mode" class="col-sm-2 col-form-label">Dark Mode</label>
+                                        <input type="checkbox" id="dark-mode-switch" name="dark-mode-switch" switch="success" {% if request.session.dark %}checked{% endif %}/>
+                                        <label for="dark-mode-switch" data-on-label="on"
+                                        data-off-label="off"></label>
+                                    </div>                                
+                                </ul>
+                            </form>   
+                        </div> <!-- card -->
+                        
+                        <div class="row m-t-20">
+                            <div class="col-7">
+                                Showing 1 - 20 of 1,524
+                            </div>
+                            <div class="col-5">
+                                <div class="btn-group float-right">
+                                    <button type="button" class="btn btn-sm btn-success waves-effect"><i class="fa fa-chevron-left"></i></button>
+                                    <button type="button" class="btn btn-sm btn-success waves-effect"><i class="fa fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div> <!-- end Col-9 -->
+                    
+                </div>
+                
+            </div><!-- End row -->
+            
+        </div>
+        <!-- end page content-->
+        
+    </div> 
+    
+    
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $('#dark-mode-switch').on("change", function(){
+        $('form#settings-form').submit();
+    })
+</script>
+{% endblock %}

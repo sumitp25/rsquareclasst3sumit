@@ -1,0 +1,818 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'assets/plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<!-- <link href="{% static 'assets/plugins/parsleyjs/parsley.css' %}" rel="stylesheet" /> -->
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Form Elements</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Add Student</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Add students here
+                            </p>          
+                            <div class="form-body">
+                                <ul class="nav nav-pills nav-justified" role="tablist">
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link active" data-toggle="tab" href="#student-details" role="tab">Student Details</a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" data-toggle="tab" href="#guardian-details" role="tab">Guardian Details</a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" data-toggle="tab" href="#course-details" role="tab">Course Details</a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" data-toggle="tab" href="#payment-details" role="tab">Payment Details</a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" data-toggle="tab" href="#batch-details" role="tab">Batch Details</a>
+                                    </li>
+                                </ul>
+                                <form id="student-add-form" action="" method="POST">
+                                    <div class="tab-content">                                        
+                                        <div class="tab-pane active p-3" id="student-details" role="tabpanel">
+                                            <div class="form-section">
+                                                <div class="mb-0">
+                                                    <div class="form-group row">
+                                                        <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+                                                        <div class="col-sm-5">
+                                                            <input class="form-control form-control" type="text" placeholder="First Name" name="student-first-name" id="student-first-name"
+                                                            parsley-required="true" required data-parsley-group="student-details">
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <input class="form-control form-control" type="text" placeholder="Last Name" name="student-last-name" id="student-last-name"
+                                                            parsley-required="true" required data-parsley-group="student-details">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-gender" class="col-sm-2 col-form-label">Gender</label>
+                                                        <div class="col-sm-3">
+                                                            <input class="" type="radio" name="student-gender-options" id="student-gender-male" value="male" checked>
+                                                            <label class="form-check-label" for="student-gender-male">Male</label>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <input class="" type="radio" name="student-gender-options" id="student-gender-female" value="female">
+                                                            <label class="form-check-label" for="student-gender-female">Female</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-category" class="col-sm-2 col-form-label">Category</label>
+                                                        <div class="col-sm-5">
+                                                            <select class="form-control" name="student-category" id="student-category">
+                                                                <option>General</option>
+                                                                <option>OBC</option>
+                                                                <option>SC</option>
+                                                                <option>ST</option>
+                                                            </select>
+                                                        </div>                                    
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-aadhar" class="col-sm-2 col-form-label">Aadhar Number</label>
+                                                        <div class="col-sm-5">
+                                                            <input class="form-control form-control" type="text" placeholder="Aadhar Number" name="student-aadhar" id="student-aadhar"
+                                                            parsley-required="true" required data-parsley-group="student-details">
+                                                        </div>                                    
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-dob" class="col-sm-2 col-form-label">Date of Birth</label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control floating-label" 
+                                                            required data-parsley-required="true" data-parsley-group="student-details" placeholder="Date" id="student-dob">
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-address" class="col-sm-2 col-form-label">Address</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control floating-label" placeholder="Address" id="student-address"
+                                                            parsley-required="true" required data-parsley-group="student-details">
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-address" class="col-sm-2 col-form-label"></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control floating-label" placeholder="landmark" id="student-landmark"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control floating-label" placeholder="city" id="student-city"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-address" class="col-sm-2 col-form-label"></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control floating-label" placeholder="state" id="student-state"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control floating-label" placeholder="Pincode" id="student-pincode"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-address" class="col-sm-2 col-form-label">Mobile No</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="tel" class="form-control floating-label" placeholder="phone number" id="student-phone"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-address" class="col-sm-2 col-form-label">School/College</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="tel" class="form-control floating-label" placeholder="School/ College of the student" id="student-school"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-email" class="col-sm-2 col-form-label">Email</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="email" class="form-control floating-label" placeholder="Email Id" id="student-email"
+                                                            required data-parsley-required="true" data-parsley-type="email">
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="student-nationality" class="col-sm-2 col-form-label">Nationality</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control floating-label" placeholder="Nationality" id="student-nationality"
+                                                            parsley-required="true" data-parsley-group="student-details" required>
+                                                        </div>
+                                                        <!-- input-group -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="tab-pane p-3" id="guardian-details" role="tabpanel">
+                                            <div class="form-section">
+                                                <div class="mb-0">
+                                                    <div class="form-group row">
+                                                        <label for="guardian-relation" class="col-sm-2 col-form-label">Relation</label>
+                                                        <div class="col-sm-3 mt-2">
+                                                            <input class="" type="radio" name="guardian-relation" id="guardian-relation-father" checked value="father">
+                                                            <label class="form-check-label" for="guardian-relation-father">Father</label>
+                                                        </div>
+                                                        <div class="col-sm-3 mt-2">
+                                                            <input class="" type="radio" name="guardian-relation" id="guardian-relation-mother" value="mother">
+                                                            <label class="form-check-label" for="guardian-relation-mother">Mother</label>
+                                                        </div>
+                                                        <div class="col-sm-3 mt-2">
+                                                            <input class="" type="radio" name="guardian-relation" id="guardian-relation-other" value="other">
+                                                            <label class="form-check-label" for="guardian-relation-other">Other</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="guardian-name" class="col-sm-2 col-form-label">Name</label>
+                                                        <div class="col-sm-2">
+                                                            <select class="form-control" name="guardian-salutation" id="guardian-salutation">
+                                                                <option>Mr.</option>
+                                                                <option>Mrs.</option>
+                                                                <option>Ms.</option>
+                                                            </select>
+                                                        </div>    
+                                                        <div class="col-sm-3">
+                                                            <input type="text" class="form-control floating-label" placeholder="First Name"
+                                                            required data-parsley-group="guardian-details" parsley-required="true" id="guardian-first-name">
+                                                        </div>     
+                                                        <div class="col-sm-3">
+                                                            <input type="text" class="form-control floating-label" placeholder="Last Name"
+                                                            required data-parsley-group="guardian-details" parsley-required="true" id="guardian-last-name">
+                                                        </div>                  
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="guardian-aadhar" class="col-sm-2 col-form-label">Aadhar No.</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control floating-label" placeholder="Aadhar Number"
+                                                            required data-parsley-group="guardian-details" parsley-required="true" id="guardian-aadhar">
+                                                        </div>                
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="guardian-phone" class="col-sm-2 col-form-label">Phone No.</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="tel" class="form-control floating-label" placeholder="Phone num" 
+                                                            required data-parsley-group="guardian-details" parsley-required="true" id="guardian-phone">
+                                                        </div>                
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="guardian-email" class="col-sm-2 col-form-label">Email</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="email" class="form-control floating-label" placeholder="Email Id" 
+                                                            required parsley-required="true" data-parsley-group="guardian-details" data-parsley-type="email" id="guardian-email">
+                                                        </div>                
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="guardian-occupation" class="col-sm-2 col-form-label">Occupation</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control floating-label" placeholder="Enter Occupation" 
+                                                            required data-parsley-group="guardian-details" parsley-required="true" id="guardian-occupation">
+                                                        </div>                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane p-3" id="course-details" role="tabpanel">
+                                            <div class="form-section">
+                                                <div class="mb-0">
+                                                    <div class="form-group row">
+                                                        <label for="admission-date" class="col-sm-2 col-form-label">Date of Admission</label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control floating-label" placeholder="Date" id="admission-date" required parsley-required="true" data-parsley-group="course-details">
+                                                        </div>
+                                                    </div>
+                                                    <div class="h6">Courses</div>
+                                                    <div id="course-container" class="container">
+                                                        <table class="table table-borderless">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Academic Year</th>
+                                                                    <th>Course</th>
+                                                                    <th>Qty</th>
+                                                                    <th>Fees</th>
+                                                                    <th></th>
+                                                                    
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td class="text-right">Fees</td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text" id="fee-total">Rs.</span>
+                                                                            </div>
+                                                                            <input type="number" name="total_course_fee" class="form-control" value="10" readonly>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td class="text-right">Discount if any</td>
+                                                                    <td colspan="2">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text prepend-discount" id="discount-type">Rs.</span>
+                                                                            </div>
+                                                                            <input type="number" name="discount" class="form-control" value="0">
+                                                                            <div class="input-group-append">
+                                                                                <select class="form-control" name="discount_type">
+                                                                                    <option value="flat">Flat</option>
+                                                                                    <option value="per">Percentage</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td class="text-right">Tootal fees</td>
+                                                                    <td colspan="2">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text" id="total-fee">Rs.</span>
+                                                                            </div>
+                                                                            <input type="number" name="total-fee" class="form-control" value="0" readonly>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td class="text-right">Notes</td>
+                                                                    <td colspan="2">
+                                                                        <input type="text" name="notes" class="form-control" >
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button type="button" id="add-course" class="btn btn-sm btn-secondary"><i class="mdi mdi-plus"></i> Add course</button></td>
+                                                                    <td><button type="button" id="additional-fee" class="btn btn-sm btn-secondary"><i class="mdi mdi-plus"></i> Additional Fees</button></td>
+                                                                    <td class="text-right"></td>
+                                                                    <td colspan="2">
+                                                                        
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane p-3" id="payment-details" role="tabpanel">
+                                            <div class="mb-0">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="row">
+                                                            <div class="col-md-3 col-xs-6">
+                                                                <div class="alert alert-primary">
+                                                                    Total (Rs.)<br/>
+                                                                    <div id="total-value" class="h4">40,000</div>
+                                                                </div>                                                        
+                                                            </div>
+                                                            <div class="col-md-3 col-xs-6">
+                                                                <div class="alert alert-success">
+                                                                    Received (Rs.)<br/>
+                                                                    <div id="received-value" class="h4">10,000</div>
+                                                                </div>                                                        
+                                                            </div>
+                                                            <div class="col-md-3 col-xs-6">
+                                                                <div class="alert alert-warning">
+                                                                    Uncleared (Rs.)<br/>
+                                                                    <div id="uncleared-value" class="h4">0</div>
+                                                                </div>                                                        
+                                                            </div>
+                                                            <div class="col-md-3 col-xs-6">
+                                                                <div class="alert alert-danger">
+                                                                    Balance (Rs.)<br/>
+                                                                    <div id="balance-value" class="h4">30,000</div>
+                                                                </div>                                                       
+                                                            </div>
+                                                        </div>
+                                                        <div class="card mb-3">
+                                                            <div class="card-header h5" style="color: #35a989">
+                                                                Paid
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Rs 10,000</h5>
+                                                                <p class="card-text text-muted">Paid on 26 Dec, 2019 by cash updated by Priyanka Trivedi on 26 Dec, 2019 at 3:28 pm</p>
+                                                                <div class="mb-5">
+                                                                    <span class="badge badge-success mr-3">Fees</span>
+                                                                    <button type="button" class="btn btn-sm btn-light mr-3"><i class="mdi mdi-pencil"></i> Edit</button>
+                                                                    <button type="button" class="btn btn-sm btn-danger mr-3"><i class="mdi mdi-delete"></i> Delete</button>
+                                                                    <button type="button" class="btn btn-sm btn-success mr-3"><i class="mdi mdi-printer"></i> Print</button>
+                                                                    <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Email</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card mb-3">
+                                                            <div class="card-header h5" style="color: #f16c69">
+                                                                Unpaid
+                                                                <div class="float-right">
+                                                                    <button type="button"  class="btn btn-success btn-sm"  data-toggle="modal" data-target=".reconfigure-installments-modal">Reconfigure Installments</button>
+                                                                    <button type="button" class="btn btn-light btn-sm">Edit existing Installments</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <ul class="list-group list-group-flush">
+                                                                    <li class="list-group-item">
+                                                                        <h5 class="card-title">Rs 10,000</h5>
+                                                                        <p class="card-text text-muted">Due on 26 Jan, 2020, created by Priyanka Trivedi on 26 Dec, 2019</p>
+                                                                        <div class="mb-5">
+                                                                            <button type="button" class="btn btn-sm btn-light mr-3" data-toggle="modal" data-target=".payment-modal"><i class="mdi mdi-pencil"></i> Pay</button>
+                                                                            <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Send Fees Reminder</button>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <h5 class="card-title">Rs 10,000</h5>
+                                                                        <p class="card-text text-muted">Due on 26 Jan, 2020, created by Priyanka Trivedi on 26 Dec, 2019</p>
+                                                                        <div class="mb-5">
+                                                                            <button type="button" class="btn btn-sm btn-light mr-3"><i class="mdi mdi-pencil"></i> Pay</button>
+                                                                            <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Send Fees Reminder</button>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <h5 class="card-title">Rs 10,000</h5>
+                                                                        <p class="card-text text-muted">Due on 26 Jan, 2020, created by Priyanka Trivedi on 26 Dec, 2019</p>
+                                                                        <div class="mb-5">
+                                                                            <button type="button" class="btn btn-sm btn-light mr-3"><i class="mdi mdi-pencil"></i> Pay</button>
+                                                                            <button type="button" class="btn btn-sm btn-info mr-3"><i class="mdi mdi-email"></i> Send Fees Reminder</button>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card">
+                                                            <div class="card-header">Fee Details</div>
+                                                            <div class="card-body">
+                                                                <ul class="list-group list-group-flush">
+                                                                    <li class="list-group-item">
+                                                                        Admission Date: <span class="float-right">01 Oct. 2019</span>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        Fee: <span class="float-right">Rs. 50,000</span>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        Discount: <span class="float-right">Rs. 10,000</span>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        Refund: <span class="float-right">Rs. 0</span>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        Cancellation Charges: <span class="float-right">Rs. 0</span>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        Total: <span class="float-right"><strong>Rs. 40,000</strong></span>
+                                                                    </li>
+                                                                </ul>                                                                                                                            </div>
+                                                            </div>
+                                                            <h4>Download</h4>
+                                                            <button type="button" class="btn btn-info">Installment's schedules</button>                                                          
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane p-3" id="batch-details" role="tabpanel">
+                                                <p class="mb-0">
+                                                    Topaos asj ioas, poaps, g-wwer-0i,a  askaso, asdqw ,m asdasd
+                                                    asdasdasdjklasn asdkopasdopka poaskdpo ask dopafsjiasdjfasp 
+                                                    asdiasdjpof [kaspd k[as d[pa sopda siodoiajs as a]]]
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>   
+                                    <div>
+                                        <button class="btn btn-warning float-left" id="prev-button">Prev</button>
+                                        <button class="btn btn-primary float-right" id="next-button">Next</button>
+                                    </div>
+                                    
+                                </div>                                      
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->            
+            </div>
+            <!-- end page content-->            
+        </div>        
+    </div> <!-- content -->
+    
+    <div class="modal fade payment-modal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" id="payment-form">
+                        {% csrf_token %}
+                        <div id="form-error"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="course-name" class="col-sm-2 col-form-label">Fees Receipt ID</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="fee-receipt" name="fee_receipt" placeholder="Fee Receipt">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">                            
+                                    <label for="payment-amount" class="col-form-label col-sm-2">Amount</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="payment-amount" name="payment_amount">
+                                    </div>       
+                                </div>  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">     
+                                    <label class="col-form-label col-sm-2">Installment Date</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="installment-date" name="installment_date">
+                                    </div>       
+                                </div>
+                            </div>   
+                        </div> 
+                        <div class="row">               
+                            <div class="col-md-6">
+                                <div class="form-group row">                                
+                                    <label class="col-form-label col-sm-2">When it is paid</label>
+                                    <div class="col-sm-10">
+                                        <input required class="form-control" type="text" value="" id="paid-date" name="paid_date">
+                                    </div>       
+                                </div>  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2">Mode of Payment</label>
+                                    <div class="col-sm-10">
+                                        <select required class="form-control" id="payment-mode" name="payment_mode">
+                                            <option value="CASH">Cash</option>
+                                            <option value="CHEQ">Cheque</option>
+                                            <option value="DEMD">Demand Draft</option>
+                                            <option value="CARD">Swipe Card</option>
+                                            <option value="NETB">Net Banking</option>
+                                            <option value="GATE">Psyment Gateway</option>
+                                            <option value="EMIC">EMI Card</option>
+                                        </select>
+                                    </div>       
+                                </div>
+                            </div>     
+                        </div>     
+                        <div class="row">
+                            <div class="col-md-6">         
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2" for="apply-tax">Apply tax?</label>     
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" id="switch7" switch="info" checked="">
+                                        <label for="switch7" data-on-label="Yes" data-off-label="No"></label>
+                                        <!-- <input type="checkbox" id="switch5" switch="warning" checked="">
+                                            <input type="checkbox" class="" id="apply-tax"> -->
+                                        </div>                                  
+                                    </div>  
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Tax Group</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="tax-group" name="tax_group">
+                                                <option value="GST">GST</option>
+                                            </select>
+                                        </div>  
+                                    </div>     
+                                </div>     
+                            </div>              
+                            <div class="col-md-6"> 
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2">Payment Category</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="payment-category" name="payment_category">
+                                            <option value="FEE">Fees</option>
+                                        </select>
+                                    </div>       
+                                </div>                   
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="course-submit">Submit</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        
+        <div class="modal fade reconfigure-installments-modal" tabindex="-1" role="dialog" aria-labelledby="reconfigureInstallments" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0">Configure Installments of Rs. 40,000</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST" id="reconfigure-installments-form">
+                            {% csrf_token %}
+                            <div id="form-error"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="course-name" class="col-sm-2 col-form-label">Amount</label>
+                                        <div class="col-sm-10">
+                                            <input required class="form-control" type="number" value="" id="installments-paid-amount" name="fee_receipt" placeholder="Fee Receipt">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="course-name" class="col-sm-2 col-form-label">Paid When?</label>
+                                        <div class="col-sm-10">
+                                            <input required class="form-control" type="text" value="" id="installments-paid-date" name="fee_receipt" placeholder="Fee Receipt">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Mode of Payment</label>
+                                        <div class="col-sm-10">
+                                            <select required class="form-control" id="installments-payment-mode" name="payment_mode">
+                                                <option value="CASH">Cash</option>
+                                                <option value="CHEQ">Cheque</option>
+                                                <option value="DEMD">Demand Draft</option>
+                                                <option value="CARD">Swipe Card</option>
+                                                <option value="NETB">Net Banking</option>
+                                                <option value="GATE">Psyment Gateway</option>
+                                                <option value="EMIC">EMI Card</option>
+                                            </select>
+                                        </div>       
+                                    </div>
+                                </div>       
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2" for="apply-tax">Apply tax?</label>     
+                                        <div class="col-sm-10">
+                                            <input type="checkbox" id="switch7" switch="info" checked="">
+                                            <label for="switch7" data-on-label="Yes" data-off-label="No"></label>
+                                        </div>                                  
+                                    </div>  
+                                </div>  
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Tax Group</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="tax-group" name="tax_group">
+                                                <option value="GST">GST</option>
+                                            </select>
+                                        </div>  
+                                    </div>     
+                                </div>
+                            </div>     
+                            <div class="row">
+                                <div class="col-md-6"> 
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Payment Category</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="payment-category" name="payment_category">
+                                                <option value="FEE">Fees</option>
+                                            </select>
+                                        </div>       
+                                    </div>                   
+                                </div>   
+                                <div class="col-md-6"> 
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-2">Fees Receipt ID</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" id="payment-receipt-id" name="installments_payment_id" type="text" />
+                                        </div>
+                                    </div>
+                                </div>                             
+                            </div>   
+                            <div class="h6">Configure Installments for Rs 30,000</div>
+                            <div class="col-md-8"> 
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2">No of Installments</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="no-of-installments" name="no-of-installments" type="number" />
+                                    </div>
+                                </div>
+                            </div>     
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" id="preview-installments">Preview Installments</button>
+                        <button class="btn btn-light" id="cencel">Cancel</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        
+        
+        {% endblock %}
+        
+        {% block bottom-includes %}
+        <script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+        <!-- Buttons examples -->
+        <script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>    
+        
+        <!-- Select plugins -->
+        <script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+        
+        <script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/moment-with-locales.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-md-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+        
+        <script src="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+        
+        <script src="{% static 'assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+        {% endblock %}
+        
+        {% block script %}
+        <script src="{% static 'assets/js/add_student.js' %}"></script>
+        <script>
+            $('#add-course').on("click", function(){
+                course_num++;
+                $('#course-container tbody').append(getNewCourseHTML());
+                $('tr[data-course-count="'+course_num+'"] .course_count').TouchSpin({
+                    initval: 1,
+                    buttondown_class: 'btn btn-primary',
+                    buttonup_class: 'btn btn-primary'
+                });
+                updateValues();
+            })
+            $('#additional-fee').on("click", function(){
+                $('#course-details tfoot').prepend(getExtraFeeHTML());
+                updateValues();
+            })
+            
+            const getExtraFeeHTML = () => {
+                return `
+                <tr class="extra-fee-row">
+                    <td></td>
+                    <td class="text-right">Additional Fee</td>
+                    <td>
+                        <input type="text" required parsley-required="true" data-parsley-group="course-details" name="extra_fee_remarks" class="form-control" placeholder="Remarks">
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Rs.</span>
+                            </div>
+                            <input type="number" name="extra_fee" class="form-control" value="0">
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-light delete_course"><i class="mdi mdi-delete"></i></a>
+                    </td>
+                </tr>
+                `;
+            }
+            
+            const getNewCourseHTML = () => {
+                return `
+                <tr data-course-count="${course_num}">
+                    <td>
+                        <input type="text" required parsley-required="true" data-parsley-group="course-details" name="course_academic_year" class="form-control" placeholder="2018-19">
+                    </td>
+                    <td>
+                        <select class="form-control" name="course-taken">
+                            {% for course in courses %}
+                            <option val="{{course.id}}" data-cost="{{course.fee}}">{{course.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input class="course_count" type="text" value="1" name="course_count">
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Rs.</span>
+                            </div>
+                            <input type="number" name="course_value" class="form-control" val="0" readOnly>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-light delete_course"><i class="mdi mdi-delete"></i></a>
+                    </td>
+                </tr>
+                `
+            }
+        </script>
+        {% endblock %}
